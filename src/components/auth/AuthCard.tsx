@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { AuthResult } from "@/context/AuthContext";
 import { useTranslation } from "@/i18n";
+import { LanguagePicker } from "@/components/dashboard/financial-dashboard/LanguagePicker";
 
 const cardVariants = {
   base: "mx-auto w-full max-w-md rounded-3xl border border-white/10 bg-white/60 p-8 shadow-xl backdrop-blur-lg dark:bg-neutral-900/70 dark:border-white/5",
@@ -34,7 +35,7 @@ export const AuthCard = ({ onLogin, onRegister }: AuthCardProps) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { t } = useTranslation();
+  const { t, setLocale } = useTranslation();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -75,6 +76,12 @@ export const AuthCard = ({ onLogin, onRegister }: AuthCardProps) => {
 
   return (
     <div className={cardVariants.base}>
+      <div className="flex items-start justify-end">
+        <LanguagePicker
+          selected={undefined}
+          onChange={(next) => setLocale(next)}
+        />
+      </div>
       <h1 className={cardVariants.title}>{t("auth.title")}</h1>
       <p className={cardVariants.subtitle}>{t("auth.subtitle")}</p>
 

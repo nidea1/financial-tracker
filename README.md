@@ -12,6 +12,10 @@ Note: I developed this project for my own use and am sharing it because I believ
 - Local JSON-based storage
 - Basic storage API routes implemented with Next.js
 
+## Live demo
+
+Try the running app at the hosted demo: https://financial-tracker-bai8.onrender.com/ — a quick way to test the app without running it locally.
+
 ## Tech Stack
 
 - Next.js 15
