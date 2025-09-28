@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  min-height: 100vh;
+}
+
+/* Popover entrance animation used by the language picker */
+@keyframes popover-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.popover-enter {
+  animation: popover-enter 160ms cubic-bezier(.2,.9,.2,1) both;
+}
+
+/* Theme-aware custom scrollbar for scrollable sections only */
+.scrollable-section {
+  /* Fallback for Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(16,185,129,0.6) rgba(0,0,0,0.04);
+}
+
+/* Webkit-based browsers */
+.scrollable-section::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.scrollable-section::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollable-section::-webkit-scrollbar-thumb {
+  background-clip: padding-box;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-color: rgba(16,185,129,0.7); /* default (light theme) */
+}
+
+/* Dark theme overrides */
+@media (prefers-color-scheme: dark) {
+  .scrollable-section {
+    scrollbar-color: rgba(16,185,129,0.35) rgba(255,255,255,0.03);
+  }
+
+  .scrollable-section::-webkit-scrollbar-thumb {
+    background-color: rgba(16,185,129,0.4);
+  }
+}
+

@@ -1,0 +1,10 @@
+node_modules
+data
+scripts
+.next
+dist
+build
+npm-debug.log
+.env
+.DS_Store
+data/storage.json
