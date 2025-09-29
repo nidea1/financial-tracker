@@ -15,14 +15,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aylık Finans Takibi",
+  title: "Finance Tracker",
   description:
-    "Türkiye'deki haneler için gelir-gider yönetimi ve aylık finans takibi",
+    "Income-expense management and monthly finance tracking",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="tr">
+    <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <LocaleProvider>{children}</LocaleProvider>
       </body>

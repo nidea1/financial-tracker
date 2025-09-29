@@ -23,18 +23,18 @@ Try the running app at the hosted demo: https://financial-tracker-bai8.onrender.
 - TypeScript
 - Tailwind CSS
 
-## Quick Start (Windows PowerShell)
+## Quick Start (Linux / macOS / WSL / Bash)
 
 1. Clone the repository:
 
-```powershell
+```bash
 git clone <repo-url>
 cd financial-tracker
 ```
 
 2. Install dependencies:
 
-```powershell
+```bash
 npm install
 # or, if you prefer
 # pnpm install
@@ -43,14 +43,14 @@ npm install
 
 3. Start the development server:
 
-```powershell
+```bash
 npm run dev
 # the app will be available at http://localhost:3000 by default
 ```
 
 4. Build and run for production:
 
-```powershell
+```bash
 npm run build
 npm start
 ```
@@ -64,25 +64,38 @@ npm start
 
 ## Docker
 
-You can run the app in Docker for local development or production-like testing. The repository includes a `Dockerfile` and `docker-compose.yml` so you can use whichever workflow you prefer. Below are PowerShell-friendly examples.
+You can run the app in Docker for local development or production-like testing. The repository includes a `Dockerfile` and `docker-compose.yml` so you can use whichever workflow you prefer. Below are bash-friendly examples.
 
 - Using Docker Compose (recommended for local development):
 
-```powershell
+```bash
 # from the project root
 docker compose up --build
 # the app will be available at http://localhost:3000 by default
 ```
 
-- Using plain Docker (build and run):
+# Using plain Docker (build and run):
 
-```powershell
+```bash
 # build the image
-docker build -t financial-tracker:local . ;
-# run a container (maps port 3000 and mounts the project for live edits if desired)
-docker run --rm -p 3000:3000 `
-	-v ${PWD}:/app `
-	-w /app `
+docker build -t financial-tracker:local .
+
+# Two common ways to provide runtime data to the container:
+# 1) Direct host bind mount (good for development, immediate edits are visible)
+docker run --rm -p 3000:3000 \
+	-v "$PWD/data":/app/data \
+	-v "$PWD":/app:ro \
+	-w /app \
+	financial-tracker:local
+
+# 2) Named Docker volume (like docker-compose uses). Create the volume once and
+# reuse it across containers. No copy step is required here; either populate the
+# volume separately or let the container create its initial files.
+docker volume create financial_tracker_data
+docker run --rm -p 3000:3000 \
+	-v financial_tracker_data:/app/data \
+	-v "$PWD":/app:ro \
+	-w /app \
 	financial-tracker:local
 ```
 

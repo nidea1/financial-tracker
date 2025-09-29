@@ -8,3 +8,7 @@ services:
       - NODE_ENV=production
     volumes:
       - ./:/app:ro
+      - financial_tracker_data:/app/data
+
+volumes:
+  financial_tracker_data: {}
