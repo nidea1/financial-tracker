@@ -113,7 +113,7 @@ export const MonthPicker = ({
   };
 
   return (
-    <div className="relative" ref={containerRef}>
+  <div className="relative" ref={containerRef}>
       <button
         type="button"
         className="flex items-center gap-2 rounded-xl border border-transparent bg-white/80 px-4 py-2 text-sm font-semibold text-neutral-900 shadow-inner shadow-white/20 transition hover:bg-emerald-50 hover:border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 dark:bg-neutral-900/70 dark:text-white dark:hover:bg-emerald-900/20 dark:hover:border-emerald-400/30"
@@ -141,7 +141,11 @@ export const MonthPicker = ({
       </button>
 
       {isOpen ? (
-        <div className="absolute right-0 top-full z-50 mt-3 w-72 rounded-2xl border border-white/10 bg-white/95 p-4 shadow-xl shadow-emerald-500/15 backdrop-blur-lg dark:border-white/10 dark:bg-neutral-950/95">
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="absolute right-0 top-full z-50 mt-3 hidden w-72 rounded-2xl border border-white/10 bg-white/95 p-4 shadow-xl shadow-emerald-500/15 backdrop-blur-lg dark:border-white/10 dark:bg-neutral-950/95 md:block"
+        >
           <header className="mb-3 flex items-center justify-between text-sm font-medium text-neutral-700 dark:text-neutral-200">
             <button
               type="button"
@@ -206,6 +210,88 @@ export const MonthPicker = ({
             >
               {labels.thisMonth}
             </button>
+          </div>
+        </div>
+      ) : null}
+
+      {isOpen ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center md:hidden">
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setIsOpen(false)}
+            aria-hidden="true"
+          />
+
+          <div
+            role="dialog"
+            aria-modal="true"
+            className="relative mx-4 max-h-[90vh] w-full max-w-md overflow-auto rounded-2xl border border-white/10 bg-white/95 p-4 shadow-xl shadow-emerald-500/15 dark:border-white/10 dark:bg-neutral-950/95"
+          >
+            <div className="mb-3 flex items-center justify-between text-sm font-medium text-neutral-700 dark:text-neutral-200">
+              <button
+                type="button"
+                className="rounded-lg p-2 transition hover:bg-emerald-500/10 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                onClick={() => setVisibleYear((prevYear) => prevYear - 1)}
+                aria-label={labels.prevYear}
+              >
+                <svg className="h-4 w-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M12.5 5L7.5 10L12.5 15"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              <span>{visibleYear}</span>
+              <button
+                type="button"
+                className="rounded-lg p-2 transition hover:bg-emerald-500/10 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                onClick={() => setVisibleYear((prevYear) => prevYear + 1)}
+                aria-label={labels.nextYear}
+              >
+                <svg className="h-4 w-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M7.5 15L12.5 10L7.5 5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 text-sm">
+              {months.map((item) => (
+                <button
+                  key={item.key}
+                  type="button"
+                  onClick={() => handleSelect(item.key)}
+                  className={`relative rounded-xl border px-3 py-2 capitalize transition focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
+                    item.isActive
+                      ? "border-emerald-500 bg-emerald-500/90 text-white shadow-lg shadow-emerald-500/30"
+                      : "border-white/20 bg-white/70 text-neutral-700 hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-200 dark:border-white/10 dark:bg-neutral-900/60 dark:text-neutral-200 dark:hover:bg-emerald-900/20 dark:hover:text-emerald-200"
+                  }`}
+                >
+                  {item.label}
+                  {item.hasData ? (
+                    <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
+                  ) : null}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-4 text-center">
+              <button
+                type="button"
+                className="inline-flex items-center gap-2 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-600 transition hover:bg-emerald-500/20 focus:outline-none focus:ring-2 focus:ring-emerald-400 dark:border-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-200"
+                onClick={handleGoToCurrent}
+              >
+                {labels.thisMonth}
+              </button>
+            </div>
           </div>
         </div>
       ) : null}
