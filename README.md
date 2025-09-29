@@ -110,8 +110,6 @@ docker stop financial-tracker ; docker rm financial-tracker
 ```
 
 Notes on authentication and visibility:
-- If the image is in a private GHCR repository, authenticate first: `docker login ghcr.io -u <username> --password-stdin` (pass a personal access token as stdin). Your provided terminal output shows a successful `docker login` and push.
-- For public images no auth is required to pull.
 - Replace the tag (`0.1.0`) with whatever version you want to use.
 
 ## Project Structure (short)
