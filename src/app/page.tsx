@@ -226,11 +226,6 @@ const HomeContent = () => {
           0
         );
 
-        const subscriptionTotal = monthSnapshot.subscriptions.reduce(
-          (total, item) => total + item.amount,
-          0
-        );
-
         const periodTotal = monthSnapshot.periodExpenses.reduce(
           (total, item) => total + item.amount,
           0
@@ -241,13 +236,13 @@ const HomeContent = () => {
           0
         );
 
-        const totalExpenses = subscriptionTotal + periodTotal + installmentTotal;
+        const historyRelevantExpenses = installmentTotal + periodTotal;
 
         return {
           monthKey: monthSnapshot.monthKey,
           totalIncome,
-          totalExpenses,
-          leftover: totalIncome - totalExpenses,
+          totalExpenses: historyRelevantExpenses,
+          leftover: totalIncome - historyRelevantExpenses,
         };
       });
   }, [currentUser, snapshot, users]);
@@ -397,8 +392,6 @@ const HomeContent = () => {
     },
     [currentUser, getMonth, prevComposite, saveUserRecord, selectedMonth, snapshot, users]
   );
-
-  // copy-month logic removed
 
   if (loading) {
     return (
